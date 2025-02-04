@@ -9,7 +9,7 @@ jobs:
       - run: echo "hello world" # run the `echo` command
 
 workflows:
-  all-pushes:
+  pr-open:
     jobs:
       - hello-job
   all-pushes-tag:
