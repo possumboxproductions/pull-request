@@ -1,0 +1,23 @@
+version: 2.1
+
+orbs:
+  jq: circleci/jq@3.0.2
+  
+jobs:
+  myjob:
+    docker:
+      - image: cimg/node:17.9.1
+    steps:
+      - checkout
+      - jq/install
+      - run: << pipeline.trigger_parameters.webhook.body >> | sed 's/\\"/"/g' | jq '.action'
+      - run:
+          name: "Print event action (1)"
+          environment:
+            EVENT_ACTION: << pipeline.trigger_parameters.webhook.body >> | sed 's/\\"/"/g' | jq '.action'
+          command: echo "$EVENT_ACTION"
+      
+workflows:
+  do_some_stuff:
+    jobs:
+      - myjob
