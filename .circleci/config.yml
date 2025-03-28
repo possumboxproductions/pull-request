@@ -10,7 +10,7 @@ jobs:
     steps:
       - checkout
       - jq/install
-      - run: << pipeline.trigger_parameters.webhook.body >> | sed 's/\\"/"/g' | jq '.action'
+      - run: echo << pipeline.trigger_parameters.webhook.body >> | sed 's/\\"/"/g' | jq '.action'
       - run:
           name: "Print event action (1)"
           environment:
